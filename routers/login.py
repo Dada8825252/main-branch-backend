@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Form, Request, Depends
+from fastapi.responses import HTMLResponse
 from fastapi.security import OAuth2AuthorizationCodeBearer
 from sqlalchemy.orm import Session
 from controllers import login, auth
@@ -23,3 +24,11 @@ async def auth_github(request: Request, db: Session = Depends(get_db)):
 async def chekc_user(request: Request):
     user = auth.get_current_user(request)
     return user
+
+@login_router.get('/auth/redirect2otp/{user_id}', name='verify_otp', response_class=HTMLResponse)
+async def redirect_to_otp(user_id: int, db: Session = Depends(get_db) ):
+    return await login.redirect_to_otp(user_id, db)
+
+@login_router.post('/auth/otp')
+async def auth_otp(otp_secret: str = Form(...), otp_input: str = Form(...)):
+    return await login.verify_otp(otp_secret, otp_input)
