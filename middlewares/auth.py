@@ -16,7 +16,8 @@ async def auth_middleware(request: Request, call_next):
         user = UserProfile(
             id = 2147483647,
             name = "anymous",
-            role = "anymous"
+            role = "anymous",
+            is_2fa_enabled = "false"
         )
     else:
         try:
@@ -25,7 +26,8 @@ async def auth_middleware(request: Request, call_next):
             user = UserProfile(
                 id = payload.get("id"),
                 name = payload.get("name"),
-                role = payload.get("role")
+                role = payload.get("role"),
+                is_2fa_enabled = payload.get("is_2fa_enabled")
             )
         except JWTError:
             return JSONResponse(status_code=401, content={"detail": "Invalid token"})

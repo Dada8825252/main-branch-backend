@@ -1,4 +1,4 @@
-from sqlalchemy import Column, BigInteger, String, DateTime, ForeignKey
+from sqlalchemy import Column, BigInteger, String, DateTime, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 from database import Base
 from datetime import datetime, timedelta
@@ -17,5 +17,7 @@ class UserAuthentication(Base):
     provider_user_id = Column(String(length = 255), index=True, nullable=False)
     created_at = Column(DateTime, default=now)
     updated_at = Column(DateTime, default=now, onupdate=now)
+
+    login_fail_time = Column(Integer, default=0, nullable=False)
 
     user = relationship("User", back_populates="user_authentication", uselist=False)

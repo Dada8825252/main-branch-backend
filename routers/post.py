@@ -14,7 +14,7 @@ def create_post(post_item: PostCreate, db: Session = Depends(get_db), user: User
 	return post.create(db=db, post=post_item, user=user)
 
 @post_router.get('/{post_id}', response_model=PostRead)
-def update_post(post_id: PositiveInt, db: Session = Depends(get_db)):
+def read_post(post_id: PositiveInt, db: Session = Depends(get_db)):
 	return post.read(db=db, post_id=post_id)
 
 @post_router.put('/{post_id}', response_model=PostRead)
@@ -22,7 +22,7 @@ def update_post(post_item: PostUpdate, post_id: PositiveInt, db: Session = Depen
 	return post.update(db=db, post_id=post_id, post=post_item, user=user)
 
 @post_router.delete('/{post_id}')
-def update_post(post_id: PositiveInt, db: Session = Depends(get_db), user: UserProfile = Depends(get_current_user)):
+def delete_post(post_id: PositiveInt, db: Session = Depends(get_db), user: UserProfile = Depends(get_current_user)):
 	return post.delete(db=db, post_id=post_id, user=user)
 
 @post_router.get('', response_model=PostSearchResponse)

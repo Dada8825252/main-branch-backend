@@ -6,6 +6,8 @@ class UserBase(BaseModel):
     id: PositiveInt
     name: str
     role: str
+    is_2fa_enabled: bool 
+    otp_secret: Optional[str] = None
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
 
@@ -25,3 +27,7 @@ class UserWithToken(BaseModel):
 
 class UserProfile(UserBase):
     pass
+
+class UserSettings(BaseModel):
+    name: str
+    is_2fa_enabled: bool 
