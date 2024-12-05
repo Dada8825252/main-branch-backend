@@ -25,10 +25,10 @@ async def chekc_user(request: Request):
     user = auth.get_current_user(request)
     return user
 
-@login_router.get('/auth/redirect2otp/{user_id}', name='verify_otp', response_class=HTMLResponse)
-async def redirect_to_otp(user_id: int, db: Session = Depends(get_db) ):
-    return await login.redirect_to_otp(user_id, db)
+@login_router.get('/auth/redirect2otp/{profile_id}', name='verify_otp', response_class=HTMLResponse)
+async def redirect_to_otp(profile_id: int, db: Session = Depends(get_db) ):
+    return await login.redirect_to_otp(profile_id, db)
 
-@login_router.post('/auth/otp')
-async def auth_otp(otp_secret: str = Form(...), otp_input: str = Form(...)):
-    return await login.verify_otp(otp_secret, otp_input)
+@login_router.post('/auth/otp/{profile_id}')
+async def auth_otp(profile_id: int, otp_input: str = Form(...), db: Session = Depends(get_db)):
+    return await login.auth_otp(profile_id, otp_input, db)

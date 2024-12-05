@@ -3,7 +3,7 @@ from pydantic import BaseModel, PositiveInt
 
 
 class ImageBase(BaseModel):
-    image_path = str 
+    image_path: str 
 
 class ImageShow(ImageBase):
     content: UploadFile

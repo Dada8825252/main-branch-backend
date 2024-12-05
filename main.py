@@ -2,7 +2,8 @@ from fastapi import FastAPI, APIRouter, Request
 from routers.post import post_router
 from routers.login import login_router
 from routers.comment import comment_router
-from routers.profile import profile_router
+from routers.setting import setting_router
+from routers.image import image_router
 from starlette.middleware.sessions import SessionMiddleware
 from middlewares.auth import auth_middleware
 from dotenv import load_dotenv
@@ -26,8 +27,12 @@ router.include_router(
 )
 
 router.include_router(
-    profile_router,
-    prefix='/profile'
+    setting_router,
+    prefix='/setting'
+)
+router.include_router(
+    image_router,
+    prefix='/image'
 )
 app.include_router(router)
 

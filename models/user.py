@@ -19,6 +19,7 @@ class User(Base):
 
     is_2fa_enabled = Column(Boolean, default=False, nullable=False)
     otp_secret = Column(String(length=100), nullable=True)
+
     user_authentication = relationship("UserAuthentication", back_populates="user", uselist=False)
     posts = relationship("Post", back_populates="user")
 
